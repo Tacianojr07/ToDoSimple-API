@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table (name = "User.TABLE_NAME") 
@@ -18,9 +22,15 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
+    @NotNull
+    @NotEmpty
+    @Size(min = 2, max = 100 )
     private String username;
 
     @Column(name = "password", length = 60, nullable = false)
+    @NotNull
+    @NotEmpty
+    @Size(min = 8, max = 60 )
     private String password;
 
 }
