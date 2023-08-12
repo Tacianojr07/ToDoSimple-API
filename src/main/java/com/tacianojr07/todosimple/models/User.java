@@ -11,13 +11,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-
 @Entity
-@Table (name = "User.TABLE_NAME") 
+@Table(name = "User.TABLE_NAME")
 public class User {
 
-    public interface CreateUser{}
-    public interface UpdateUser{}
+    public interface CreateUser {
+    }
+
+    public interface UpdateUser {
+    }
 
     public static final String TABLE_NAME = "user";
 
@@ -29,17 +31,16 @@ public class User {
     @Column(name = "username", length = 100, nullable = false, unique = true)
     @NotNull(groups = CreateUser.class)
     @NotEmpty(groups = CreateUser.class)
-    @Size(groups = CreateUser.class, min = 2, max = 100 )
+    @Size(groups = CreateUser.class, min = 2, max = 100)
     private String username;
 
     @Column(name = "password", length = 60, nullable = false)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
+    @NotNull(groups = { CreateUser.class, UpdateUser.class })
     @NotEmpty(groups = CreateUser.class)
-    @Size(groups = {CreateUser.class, UpdateUser.class}, min = 8, max = 60 )
+    @Size(groups = { CreateUser.class, UpdateUser.class }, min = 8, max = 60)
     private String password;
 
-    //private List<Task> tasks = new ArrayList<Task>
-
+    // private List<Task> tasks = new ArrayList<Task>
 
     public User() {
     }
@@ -49,7 +50,6 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
 
     public Long getId() {
         return this.id;
@@ -76,18 +76,25 @@ public class User {
     }
 
     @Override
-    public boolean equals (Object obj) {
-        if( obj == this) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        if (!obj instanceof User) {
+        if (!this instanceof User) {
             return false;
         }
-        if(obj == null) { 
+        if (obj == null) {
             return false;
         }
 
         User other = (User) obj;
+        if (this.id == null)
+            if (other.id != null)
+                return false;
+            else if (!this.id.equals(other.id))
+                return false;
+        return Objects.equals(this.id, other.id) && Objects.equals(this.username, other.username)
+                && Objects.equals(this.password, other.password);
 
     }
 
@@ -98,6 +105,5 @@ public class User {
         result = prime * result + (this.id == null ? 0 : this.id.hashCode());
         return result;
     }
-
 
 }
