@@ -80,9 +80,9 @@ public class User {
         if (obj == this) {
             return true;
         }
-        if (!this instanceof User) {
-            return false;
-        }
+        // if (!obj instanceof User) {
+        //     return false;
+        // }
         if (obj == null) {
             return false;
         }
