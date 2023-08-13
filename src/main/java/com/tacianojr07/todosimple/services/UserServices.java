@@ -29,7 +29,6 @@ public class UserServices {
 
     @Transactional
     public User createUser(User obj) {
-        obj.setId(null);
         obj = this.userRepository.save(obj);
         this.taskRepository.saveAll(obj.getTasks());
         return obj;
@@ -37,6 +36,7 @@ public class UserServices {
 
     @Transactional
     public User updateUser(User obj) {
+        obj.setId(null);
         User newObj = findById(obj.getId());
         newObj.setPassword(obj.getPassword());
         return this.userRepository.save(newObj);
