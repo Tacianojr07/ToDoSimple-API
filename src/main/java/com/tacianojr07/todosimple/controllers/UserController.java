@@ -4,7 +4,6 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tacianojr07.todosimple.models.User;
 import com.tacianojr07.todosimple.models.User.CreateUser;
+import com.tacianojr07.todosimple.models.User.UpdateUser;
 import com.tacianojr07.todosimple.services.UserServices;
 
 @RestController
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @Validated(Update.class)
+    @Validated(UpdateUser.class)
     public ResponseEntity<Void> update(@Valid @RequestBody User obj, @PathVariable Long id) {
         obj.setId(id);
         this.userServices.updateUser(obj);
