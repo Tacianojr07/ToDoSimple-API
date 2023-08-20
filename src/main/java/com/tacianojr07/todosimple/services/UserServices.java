@@ -36,7 +36,7 @@ public class UserServices {
 
     @Transactional
     public User updateUser(User obj) {
-        obj.setId(null);
+        
         User newObj = findById(obj.getId());
         newObj.setPassword(obj.getPassword());
         return this.userRepository.save(newObj);
