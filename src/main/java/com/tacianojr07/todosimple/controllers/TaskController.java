@@ -28,6 +28,8 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+
+    @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) {
         Task obj = this.taskService.findById(id);
         return ResponseEntity.ok(obj);
@@ -52,6 +54,7 @@ public class TaskController {
     @PutMapping("/{id}")
     @Validated
     public ResponseEntity<Void> update(@RequestBody Task task, @PathVariable Long id) {
+        task.setId(id);
         this.taskService.update(task);
         return ResponseEntity.noContent().build();
     }
