@@ -36,6 +36,7 @@ public class TaskService {
         User user = this.userServices.findById(obj.getUser().getId());
         obj.setId(null);
         obj.setUser(user);
+        obj = this.taskRepository.save(obj);
         return obj;
     }
 
