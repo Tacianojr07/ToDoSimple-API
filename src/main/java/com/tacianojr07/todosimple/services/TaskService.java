@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.tacianojr07.todosimple.models.Task;
 import com.tacianojr07.todosimple.models.User;
 import com.tacianojr07.todosimple.repositories.TaskRepository;
+import com.tacianojr07.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TaskService {
@@ -23,7 +24,7 @@ public class TaskService {
 
     public Task findById(Long id){
         Optional<Task> task = this.taskRepository.findById(id);
-        return task.orElseThrow(() -> new RuntimeException("Tarefa não encontrada! " + id + "  Tipo: " + Task.class.getName()));
+        return task.orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada! " + id + "  Tipo: " + Task.class.getName()));
     }
 
     public List<Task> findAllByUserId(Long userId) {
