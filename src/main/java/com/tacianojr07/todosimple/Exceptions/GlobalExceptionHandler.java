@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.tacianojr07.todosimple.services.exceptions.ObjectNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j(topic= "GLOBAL_EXCEPTION_HANDLER")
@@ -106,6 +107,21 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler{
         return buildErrorResponse(
             constraintViolationException,
             HttpStatus.UNPROCESSABLE_ENTITY,
+            request
+        );
+    }
+
+    //erro para quando se é buscado algo na api e não for encontrado
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleObjectNotFoundException(
+        ObjectNotFoundException objectNotFoundException,
+        WebRequest request
+    ) {
+        log.error("Falied to find the requested elemet", objectNotFoundException);
+        return buildErrorResponse(
+            objectNotFoundException,
+            HttpStatus.NOT_FOUND,
             request
         );
     }
