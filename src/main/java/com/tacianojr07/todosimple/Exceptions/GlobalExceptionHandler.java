@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.tacianojr07.todosimple.services.exceptions.DataBindingViolantionException;
 import com.tacianojr07.todosimple.services.exceptions.ObjectNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -124,6 +125,17 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler{
             HttpStatus.NOT_FOUND,
             request
         );
+    }
+
+
+    @ExceptionHandler(DataBindingViolantionException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleDataBindingViolationException(
+        DataBindingViolantionException dataBindingViolantionException,
+        WebRequest request
+    ) {
+        log.error("Falied to delete entity with associated data", dataBindingViolantionException);
+        return buildErrorResponse(dataBindingViolantionException, HttpStatus.CONFLICT, request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(
