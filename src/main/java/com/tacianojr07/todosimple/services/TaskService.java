@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tacianojr07.todosimple.models.Task;
 import com.tacianojr07.todosimple.models.User;
 import com.tacianojr07.todosimple.repositories.TaskRepository;
+import com.tacianojr07.todosimple.services.exceptions.DataBindingViolantionException;
 import com.tacianojr07.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -52,7 +54,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível deletar");
+            throw new DataBindingViolantionException("Não é possível deletar");
         }
     }
 }

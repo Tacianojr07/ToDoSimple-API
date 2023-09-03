@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.tacianojr07.todosimple.models.User;
 
 import com.tacianojr07.todosimple.repositories.UserRepository;
+import com.tacianojr07.todosimple.services.exceptions.DataBindingViolantionException;
 import com.tacianojr07.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -48,7 +49,7 @@ public class UserServices {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidade relacionada");
+            throw new DataBindingViolantionException("Não é possível excluir pois há entidade relacionada");
         }
     }
 
