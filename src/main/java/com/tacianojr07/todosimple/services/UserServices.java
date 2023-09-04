@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tacianojr07.todosimple.models.User;
@@ -20,6 +21,9 @@ public class UserServices {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
    
 
     public User findById(Long id) {
@@ -31,6 +35,7 @@ public class UserServices {
     @Transactional
     public User createUser(User obj) {
         obj.setId(null);
+        obj.setPassword(bCryptPasswordEncoder.encode(obj.getPassword()));
         obj = this.userRepository.save(obj);
         return obj;
     }
@@ -40,6 +45,7 @@ public class UserServices {
         
         User newObj = findById(obj.getId());
         newObj.setPassword(obj.getPassword());
+        newObj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword()));
         return this.userRepository.save(newObj);
     }
 
